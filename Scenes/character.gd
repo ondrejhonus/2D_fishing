@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const SPEED = 300.0
+const SPEED = 100.0
 const FISHING_DISTANCE = 50.0  # Distance at which the player can fish from the border
 @onready var _animated_sprite = $AnimatedSprite2D
 @onready var _camera = $Camera2D
@@ -55,7 +55,7 @@ func get_input() -> void:
 
 func _physics_process(delta: float) -> void:
 	move_and_slide()
-	print(able_to_fish)
+	#print(able_to_fish)
 
 # Check if the player is close to the world border to enable fishing
 func check_proximity_to_world_border() -> void:
@@ -76,3 +76,9 @@ func check_proximity_to_world_border() -> void:
 		able_to_fish = true
 	else:
 		able_to_fish = false
+
+func _on_fishing_area_body_entered(body: CharacterBody2D) -> void:
+		print("area entered")
+
+func _on_fishing_area_body_exited(body: CharacterBody2D) -> void:
+		print("area exited")
