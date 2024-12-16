@@ -76,9 +76,23 @@ func check_proximity_to_world_border() -> void:
 		able_to_fish = true
 	else:
 		able_to_fish = false
+		
+func go_to_fishing_spot(target_position: Vector2) -> void:
+	var direction = (target_position - global_position).normalized()
+	while global_position.distance_to(target_position) > 1.0:
+		velocity = direction * SPEED
+		move_and_slide()
+		await get_tree().create_timer(0.01).timeout
+		velocity = Vector2.ZERO
+	
 
 func _on_fishing_area_body_entered(body: CharacterBody2D) -> void:
+		able_to_fish = true
+		var fishing_area_center = body.global_position
+		go_to_fishing_spot(fishing_area_center)
 		print("area entered")
+		
 
 func _on_fishing_area_body_exited(body: CharacterBody2D) -> void:
+		able_to_fish = false
 		print("area exited")
